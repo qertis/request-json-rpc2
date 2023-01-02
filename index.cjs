@@ -8,11 +8,11 @@ const supertest = isDev ? require('supertest') : null;
  * @param {string} obj.url - url
  * @param {object} obj.body - body
  * @param {object} [obj.auth] - basic auth
- * @param {string} [obj.verification] - verification signatures like Ed25519Signature2018
+ * @param {string} [obj.signature] - verification signatures like Ed25519
  * @param {object} [app] - ExpressJS app
  * @returns {Promise<*>}
  */
-const rpc = ({ url, body, headers = {}, auth, jwt, verification }, app) => {
+const rpc = ({ url, body, headers = {}, auth, jwt, signature }, app) => {
   const parameters = {
     method: 'POST',
     url: url,
@@ -26,8 +26,8 @@ const rpc = ({ url, body, headers = {}, auth, jwt, verification }, app) => {
     },
     json: true,
   };
-  if (verification) {
-    parameters.headers['verification'] = verification;
+  if (signature) {
+    parameters.headers['Signature'] = JSON.stringify(signature);
   }
   if (jwt) {
     parameters.headers['Authorization'] = 'Bearer ' + jwt;
@@ -38,8 +38,9 @@ const rpc = ({ url, body, headers = {}, auth, jwt, verification }, app) => {
   if (isDev) {
     if (!app) {
       return Promise.reject({
-        message: '"app" not found in second argument',
-        statusCode: 500,
+        jsonrpc: parameters.body.jsonrpc,
+        error: { code: -32603, message: '"app" not found in second argument' },
+        id: null,
       });
     }
     return new Promise((resolve, reject) => {
@@ -65,14 +66,16 @@ const rpc = ({ url, body, headers = {}, auth, jwt, verification }, app) => {
       }
       if (!body) {
         return reject({
-          message: 'Unknown Error',
-          statusCode: 500,
+          jsonrpc: parameters.body.jsonrpc,
+          error: { code: -32099, message: 'Unknown Error' },
+          id: null,
         });
       }
       if (response.statusCode >= 400) {
         return reject({
-          message: body.error || body,
-          statusCode: response.statusCode,
+          jsonrpc: parameters.body.jsonrpc,
+          error: { code: -32603, message: body.error || body },
+          id: null,
         });
       }
       return resolve(body);
