@@ -1,10 +1,7 @@
 const isDev = String(process.env.NODE_ENV).toLowerCase() === 'test';
 
 const request = require('request');
-let supertest;
-if (isDev) {
-  supertest = require('supertest');
-}
+const supertest = isDev ? require('supertest') : null;
 
 /**
  * @param {string} obj - obj
@@ -45,17 +42,21 @@ const rpc = ({ url, body, headers = {}, auth, jwt, verification }, app) => {
         statusCode: 500,
       });
     }
-    return supertest(app)
+    return new Promise((resolve, reject) => {
+      supertest(app)
       .post(url)
       .send({
         method: parameters.method,
-        url: 'http://' + parameters.url,
+        url: parameters.url,
         headers: parameters.headers,
         body,
       })
       .then((response) => {
-        return response.body.result;
+        resolve(response.body);
+      }).catch((error) => {
+        reject(error);
       });
+    });
   }
   return new Promise((resolve, reject) => {
     request(parameters, (error, response, body) => {

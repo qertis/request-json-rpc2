@@ -4,7 +4,7 @@
   "description": "Simplified JSON-RPC2 request client.",
   "main": "index.cjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test node tests/index.test.cjs"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "request": "~2.88.2"
   },
   "devDependencies": {
+    "express": "4.18.2",
     "supertest": "6.3.3"
   }
 }
