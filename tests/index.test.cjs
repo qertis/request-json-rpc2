@@ -8,7 +8,14 @@ app.use(express.json());
 
 test('ExpressJS', async () => {
   app.post('/api', function(req, res) {
-    res.status(200).json('PONG');
+    switch (req.body.body.method) {
+      case 'ping': {
+        if (req.body.body.params.foo === 'bar') {
+          res.status(200).json('PONG');
+        }
+        break;
+      }
+    }
   });
 
   const result = await requestJsonRpc2({
