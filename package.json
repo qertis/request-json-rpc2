@@ -10,19 +10,21 @@
     "type": "git",
     "url": "git+https://github.com/qertis/request-json-rpc2.git"
   },
+  "files": [
+    "index.mjs"
+  ],
   "keywords": [
+    "request-json-rpc",
     "request-json-rpc2",
-    "node request-json-rpc2",
+    "node request-json-rpc 2",
     "json-rpc2",
+    "json-rpc-2",
     "jsonrpc2",
     "request-jsonrpc",
-    "request-jsonrpc2",
-    "request",
+    "request json rpc 2",
+    "request rpc",
     "json-rpc",
-    "request",
-    "json-rpc2",
-    "request",
-    "json-rpc-2"
+    "rpc api client request"
   ],
   "author": "Denis Baskovsky (https://baskovsky.ru)",
   "license": "MIT",
