@@ -1,4 +1,4 @@
-# Request JSON-RPC 2 - Simplified JSON-RPC 2.0 client
+# Request JSON-RPC 2 - Simplified JSON-RPC 2.0 NodeJS client
 
 ## Super simple to use
 
