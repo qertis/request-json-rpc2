@@ -1,6 +1,6 @@
 {
   "name": "request-json-rpc2",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Simplified JSON-RPC2 request nodejs client",
   "main": "index.cjs",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/qertis/request-json-rpc2.git"
   },
   "files": [
-    "index.mjs"
+    "index.cjs"
   ],
   "keywords": [
     "request-json-rpc",
@@ -21,7 +21,7 @@
     "json-rpc-2",
     "jsonrpc2",
     "request-jsonrpc",
-    "request json rpc 2",
+    "fetch json rpc 2.0",
     "request rpc",
     "json-rpc",
     "rpc api client request"
@@ -32,11 +32,8 @@
     "url": "https://github.com/qertis/request-json-rpc2/issues"
   },
   "homepage": "https://github.com/qertis/request-json-rpc2#readme",
-  "dependencies": {
-    "request": "~2.88.2"
-  },
   "devDependencies": {
-    "express": "~4.18.2",
+    "express": "~4.19.1",
     "supertest": "~6.3.4"
   }
 }

@@ -8,10 +8,10 @@ Request JSON-RPC 2 is designed to be the simplest way possible to make JSON-RPC 
 const requestJsonRpc2 = require('request-json-rpc2');
 
 const result = await requestJsonRpc2({
-  url: '/api',
+  url: String,
   body: {
-    method: 1,
-    params: 'hello world',
+    method: String,
+    params: Array | Object,
   },
 });
 ```
@@ -52,8 +52,8 @@ Includes basic or bearer.
 const result = await requestJsonRpc2({
   url: '/api',
   body: {
-    method: 1,
-    params: 'auth hello world',
+    method: 'YOUR_METHOD',
+    params: ['auth hello world'],
   }, 
   auth: {
     'user': 'username',
@@ -71,8 +71,8 @@ JSON Web Token example.
 const result = await requestJsonRpc2({
   url: '/api',
   body: {
-    method: 1,
-    params: 'JWT hello world',
+    method: 'YOUR_METHOD',
+    params: ['JWT hello world'],
   }, 
   jwt: 'ewogICJhbGciOiAiSFMyNTYiLAogICJ0eXAiOiAiSldUIgp9.ewogICJuYW1lIjogIlJlcXVlc3QgSlNPTi1SUEMgMi4wIgp9',
 });
@@ -80,14 +80,14 @@ const result = await requestJsonRpc2({
 
 ## Signature
 
-Ed25519Signature2018 example.
+> Ed25519Signature2018
 
 ```javascript
 const result = await requestJsonRpc2({
   url: '/api',
   body: {
     method: 1,
-    params: 'signature hello world',
+    params: ['signature hello world'],
   },
   signature: {
     "@context": ["https://w3id.org/security/v2"],
