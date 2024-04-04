@@ -4,7 +4,7 @@
  */
 const VERSION = '2.0';
 /**
- * @param {string} obj - obj
+ * @param {string} obj - object
  * @param {string} obj.url - url
  * @param {object} obj.body - body
  * @param {object} [obj.auth] - basic auth
@@ -13,7 +13,15 @@ const VERSION = '2.0';
  * @param {object} [app] - Express JS Application
  * @returns {Promise<*>}
  */
-const rpc = ({ url, body, headers = {}, auth, jwt, signature, dev = false, }, app) => {
+export default async ({
+               url,
+               body,
+               headers = {},
+               auth,
+               jwt,
+               signature,
+               dev = false,
+             }, app) => {
   if (dev) {
     if (!app) {
       return Promise.reject({
@@ -44,21 +52,16 @@ const rpc = ({ url, body, headers = {}, auth, jwt, signature, dev = false, }, ap
     if (auth) {
       parameters.auth = auth;
     }
-    return new Promise((resolve, reject) => {
-      require('supertest')(app)
-      .post(url)
+    const request = await import('supertest');
+    const { post } = request.default(app);
+    return post(url)
       .send({
         method: parameters.method,
         url: parameters.url,
         headers: parameters.headers,
         body,
       })
-      .then((response) => {
-        resolve(response.body);
-      }).catch((error) => {
-        reject(error);
-      });
-    });
+      .then(response => response.body);
   }
 
   const fheaders = new Headers()
@@ -131,5 +134,3 @@ const rpc = ({ url, body, headers = {}, auth, jwt, signature, dev = false, }, ap
     }
   });
 };
-
-module.exports = rpc;

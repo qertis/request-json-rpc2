@@ -1,17 +1,20 @@
 {
   "name": "request-json-rpc2",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Simplified JSON-RPC2 request nodejs client",
   "main": "index.cjs",
+  "module": "index.mjs",
   "scripts": {
-    "test": "NODE_ENV=test node tests/index.test.cjs"
+    "test:esm": "node tests/index.test.mjs",
+    "test:cjs": "node tests/index.test.cjs"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qertis/request-json-rpc2.git"
   },
   "files": [
-    "index.cjs"
+    "index.cjs",
+    "index.mjs"
   ],
   "keywords": [
     "request-json-rpc",

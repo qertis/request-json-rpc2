@@ -1,13 +1,13 @@
-const test = require('node:test');
-const assert = require('node:assert/strict');
-const express = require('express');
-const requestJsonRpc2 = require('../index.cjs');
+import assert from 'node:assert';
+import { test } from 'node:test';
+import express from 'express';
+import requestJsonRpc2 from '../index.mjs';
 
 const app = express();
 app.use(express.json());
 
 test('ExpressJS', async () => {
-  app.post('/api', function(req, res) {
+  app.post('/api', (req, res) => {
     switch (req.body.body.method) {
       case 'ping': {
         if (req.body.body.params.foo === 'bar') {
@@ -17,7 +17,6 @@ test('ExpressJS', async () => {
       }
     }
   });
-
   const result = await requestJsonRpc2({
     url: '/api',
     body: {
@@ -32,6 +31,5 @@ test('ExpressJS', async () => {
     },
     dev: true,
   }, app);
-
   assert.equal(result, 'PONG');
 });
