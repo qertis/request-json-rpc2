@@ -1,11 +1,11 @@
-# Request JSON-RPC 2 - Simplified JSON-RPC 2.0 NodeJS client
+# Request JSON-RPC 2 - Simplified JSON-RPC 2.0 CJS and ESM client
 
 ## Super simple to use
 
 Request JSON-RPC 2 is designed to be the simplest way possible to make JSON-RPC 2 calls.
 
 ```javascript
-const requestJsonRpc2 = require('request-json-rpc2');
+import requestJsonRpc2 from 'request-json-rpc2';
 
 const result = await requestJsonRpc2({
   url: String,
@@ -86,7 +86,7 @@ const result = await requestJsonRpc2({
 const result = await requestJsonRpc2({
   url: '/api',
   body: {
-    method: 1,
+    method: 'YOUR_METHOD',
     params: ['signature hello world'],
   },
   signature: {
