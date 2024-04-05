@@ -9,20 +9,18 @@ const VERSION = '2.0';
  * @param {object} obj.body - body
  * @param {object} [obj.auth] - basic auth
  * @param {string} [obj.signature] - verification Ed25519 signatures
- * @param {boolean} [obj.dev] - development
  * @param {object} [app] - Express JS Application
  * @returns {Promise<*>}
  */
-export default async ({
+export default async({
                url,
                body,
                headers = {},
                auth,
                jwt,
                signature,
-               dev = false,
              }, app) => {
-  if (dev) {
+  if ('production' !== process.env.NODE_ENV) {
     if (!app) {
       return Promise.reject({
         jsonrpc: VERSION,
@@ -61,7 +59,12 @@ export default async ({
         headers: parameters.headers,
         body,
       })
-      .then(response => response.body);
+      .then(response => response.body)
+      .catch(e => ({
+        jsonrpc: VERSION,
+        error: { code: -32603, message: e.message },
+        id: null,
+      }))
   }
 
   const fheaders = new Headers()
@@ -74,13 +77,7 @@ export default async ({
     fheaders.append('Authorization', 'Bearer ' + jwt);
   }
   if (auth && auth.user && auth.pass) {
-    const basicAuth = 'Basic ' +
-      Buffer.from(
-        auth.user +
-          ':' +
-          auth.pass,
-      ).toString('base64');
-    fheaders.set('Authorization', basicAuth);
+    fheaders.set('Authorization', btoa(auth.user + ':' + auth.pass));
   }
   const parameters = {
     jsonrpc: VERSION,
