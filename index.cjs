@@ -93,6 +93,9 @@ const rpc = ({ url, body, headers = {}, auth, jwt, signature, dev = false, }, ap
       id: null,
     };
   }
+  if (body.params) {
+    parameters.params = body.params;
+  }
   return fetch(url, {
     body: JSON.stringify(parameters),
     headers: fheaders,
