@@ -1,12 +1,13 @@
 {
   "name": "request-json-rpc2",
-  "version": "2.1.2",
-  "description": "Simplified JSON-RPC2 request nodejs client",
+  "version": "2.1.3",
+  "description": "Simplified JSON-RPC2 request nodejs and browser client",
   "main": "index.cjs",
   "module": "dist/index.mjs",
   "type": "module",
   "source": "index.mjs",
   "scripts": {
+    "test": "npm run test:esm && npm run test:cjs",
     "test:esm": "node tests/index.test.mjs",
     "test:cjs": "node tests/index.test.cjs",
     "build": "NODE_ENV=production parcel build --no-autoinstall"
@@ -20,7 +21,7 @@
     "dist/index.mjs"
   ],
   "keywords": [
-    "request-json-rpc",
+    "request json rpc",
     "request-json-rpc2",
     "node request-json-rpc 2",
     "json-rpc2",
@@ -41,6 +42,6 @@
   "devDependencies": {
     "express": "~4.19.1",
     "parcel": "~2.12.0",
-    "supertest": "~6.3.4"
+    "supertest": "~7.0.0"
   }
 }

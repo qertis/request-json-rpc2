@@ -4,16 +4,25 @@
  */
 const VERSION = '2.0';
 /**
- * @param {string} obj - obj
+ * @param {string} obj - object
  * @param {string} obj.url - url
  * @param {object} obj.body - body
+ * @param {object} [obj.headers] - headers
  * @param {object} [obj.auth] - basic auth
  * @param {string} [obj.signature] - verification Ed25519 signatures
  * @param {boolean} [obj.dev] - development
  * @param {object} [app] - Express JS Application
  * @returns {Promise<*>}
  */
-const rpc = ({ url, body, headers = {}, auth, jwt, signature, dev = false, }, app) => {
+const rpc = ({
+               url,
+               body,
+               headers = {},
+               auth,
+               jwt,
+               signature,
+               dev = 'production' !== process.env.NODE_ENV,
+             }, app) => {
   if (dev) {
     if (!app) {
       return Promise.reject({
@@ -61,9 +70,16 @@ const rpc = ({ url, body, headers = {}, auth, jwt, signature, dev = false, }, ap
     });
   }
 
-  const fheaders = new Headers()
-  fheaders.append('Accept', 'application/json');
-  fheaders.append('Content-Type', 'application/json');
+  const fheaders = new Headers();
+  Object.keys(headers).forEach(((key) => {
+    fheaders.append(key, headers[key]);
+  }));
+  if (!fheaders.has('Accept')) {
+    fheaders.append('Accept', 'application/json');
+  }
+  if (!fheaders.has('Content-Type')) {
+    fheaders.append('Content-Type', 'application/json');
+  }
   if (signature) {
     fheaders.append('Signature', JSON.stringify(signature));
   }

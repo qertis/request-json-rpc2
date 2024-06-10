@@ -7,8 +7,10 @@ const VERSION = '2.0';
  * @param {string} obj - object
  * @param {string} obj.url - url
  * @param {object} obj.body - body
+ * @param {object} [obj.headers] - headers
  * @param {object} [obj.auth] - basic auth
  * @param {string} [obj.signature] - verification Ed25519 signatures
+ * @param {boolean} [obj.dev] - development
  * @param {object} [app] - Express JS Application
  * @returns {Promise<*>}
  */
@@ -19,8 +21,9 @@ export default async({
                auth,
                jwt,
                signature,
+               dev = 'production' !== process.env.NODE_ENV,
              }, app) => {
-  if ('production' !== process.env.NODE_ENV) {
+  if (dev) {
     if (!app) {
       return Promise.reject({
         jsonrpc: VERSION,
@@ -67,9 +70,16 @@ export default async({
       }))
   }
 
-  const fheaders = new Headers()
-  fheaders.append('Accept', 'application/json');
-  fheaders.append('Content-Type', 'application/json');
+  const fheaders = new Headers();
+  Object.keys(headers).forEach(((key) => {
+    fheaders.append(key, headers[key]);
+  }));
+  if (!fheaders.has('Accept')) {
+    fheaders.append('Accept', 'application/json');
+  }
+  if (!fheaders.has('Content-Type')) {
+    fheaders.append('Content-Type', 'application/json');
+  }
   if (signature) {
     fheaders.append('Signature', JSON.stringify(signature));
   }

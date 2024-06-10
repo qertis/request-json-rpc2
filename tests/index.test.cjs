@@ -6,7 +6,7 @@ const requestJsonRpc2 = require('../index.cjs');
 const app = express();
 app.use(express.json());
 
-test('ExpressJS', async () => {
+test('CJS', async () => {
   app.post('/api', function(req, res) {
     switch (req.body.body.method) {
       case 'ping': {

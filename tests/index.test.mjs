@@ -6,7 +6,7 @@ import requestJsonRpc2 from '../index.mjs';
 const app = express();
 app.use(express.json());
 
-test('ExpressJS', async () => {
+test('MJS', async () => {
   app.post('/api', (req, res) => {
     switch (req.body.body.method) {
       case 'ping': {
