@@ -90,7 +90,9 @@ export default async({
     fheaders.append('Authorization', 'Bearer ' + jwt);
   }
   if (auth && auth.user && auth.pass) {
-    fheaders.set('Authorization', btoa(auth.user + ':' + auth.pass));
+    const basicAuth = 'Basic ' +
+      Buffer.from(auth.user + ':' + auth.pass).toString('base64');
+    fheaders.set('Authorization', basicAuth);
   }
   const parameters = {
     jsonrpc: VERSION,

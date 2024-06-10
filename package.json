@@ -1,6 +1,6 @@
 {
   "name": "request-json-rpc2",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Simplified JSON-RPC2 request nodejs and browser client",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
