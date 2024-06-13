@@ -1,20 +1,31 @@
 {
   "name": "request-json-rpc2",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Simplified JSON-RPC2 request nodejs and browser client",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "type": "module",
-  "source": "index.mjs",
   "scripts": {
     "test": "npm run test:esm && npm run test:cjs",
     "test:esm": "node tests/index.test.mjs",
     "test:cjs": "node tests/index.test.cjs",
-    "build": "NODE_ENV=production parcel build --no-autoinstall --no-content-hash"
+    "build": "NODE_ENV=production parcel build index.mjs --no-autoinstall --no-content-hash"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qertis/request-json-rpc2.git"
+  },
+  "targets": {
+    "main": {
+      "isLibrary": true,
+      "optimize": true,
+      "scopeHoist": true
+    },
+    "module": {
+      "isLibrary": true,
+      "optimize": true,
+      "scopeHoist": true
+    }
   },
   "files": [
     "dist/index.cjs",
