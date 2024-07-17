@@ -4,7 +4,7 @@
  */
 const VERSION = '2.0';
 /**
- * @param {string} obj - object
+ * @param {object} obj - object
  * @param {string} obj.url - url
  * @param {object} obj.body - body
  * @param {object} [obj.headers] - headers

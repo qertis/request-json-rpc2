@@ -1,4 +1,5 @@
-# Request JSON-RPC 2 - Simplified JSON-RPC 2.0 CJS and ESM client
+# REQUEST JSON RPC2
+> Simplified JSON-RPC 2.0 CJS and ESM client
 
 ## Super simple to use
 

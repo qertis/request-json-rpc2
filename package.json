@@ -1,10 +1,11 @@
 {
   "name": "request-json-rpc2",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Simplified JSON-RPC2 request nodejs and browser client",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "type": "module",
+  "types": "index.d.ts",
   "scripts": {
     "test": "npm run test:esm && npm run test:cjs",
     "test:esm": "node tests/index.test.mjs",
@@ -25,23 +26,24 @@
       "isLibrary": true,
       "optimize": true,
       "scopeHoist": true
-    }
+    },
+    "types": false
   },
   "files": [
     "dist/index.cjs",
-    "dist/index.mjs"
+    "dist/index.mjs",
+    "index.d.ts"
   ],
   "keywords": [
-    "request json rpc",
+    "request json rpc2",
     "request-json-rpc2",
-    "node request-json-rpc 2",
+    "node jsonrpc2",
+    "browser jsonrpc2",
     "json-rpc2",
     "json-rpc-2",
-    "jsonrpc2",
     "request-jsonrpc",
     "fetch json rpc 2.0",
-    "request rpc",
-    "json-rpc",
+    "request rpc 2.0",
     "rpc api client request"
   ],
   "author": "Denis Baskovsky (https://baskovsky.ru)",
