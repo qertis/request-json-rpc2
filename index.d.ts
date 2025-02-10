@@ -16,7 +16,7 @@ export interface JSONRPCResponseBase {
 
 export interface JSONRPCSuccessResponse extends JSONRPCResponseBase {
   result: string;
-  error?: never;
+  error: never;
 }
 
 export interface JSONRPCErrorResponse extends JSONRPCResponseBase {
@@ -24,10 +24,17 @@ export interface JSONRPCErrorResponse extends JSONRPCResponseBase {
     code: number;
     message: string;
   };
-  result?: never;
+  result: never;
 }
 
 export type JSONRPCResponse = JSONRPCSuccessResponse | JSONRPCErrorResponse;
+
+type AuthParams = {
+  user: string
+  pass: string
+}
+
+type RequestParams<T> = T extends object ? T : string[]
 
 export interface JSONRPCRequest {
   url: string
@@ -35,13 +42,10 @@ export interface JSONRPCRequest {
     jsonrpc: version
     id: string
     method: string
-    params: unknown
+    params: RequestParams<any>
   }
   headers?: Record<string, string>
-  auth?: {
-    user: string
-    pass: string
-  }
+  auth?: AuthParams
   credentials?: string
   signature?: signature
 }

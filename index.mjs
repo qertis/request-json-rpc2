@@ -34,6 +34,11 @@ export default async({
    * @type {number}
    */
   const GENERAL_ERROR = -32099;
+  /**
+   * @constant
+   * @type {number}
+   */
+  const SIGNAL_TIMEOUT = 30000;
   if ('production' !== process.env.NODE_ENV) {
     if (dev) {
       if (!app) {
@@ -120,7 +125,7 @@ export default async({
     headers: fheaders,
     method: 'POST',
     credentials,
-    signal: AbortSignal.timeout(30000),
+    signal: AbortSignal.timeout(SIGNAL_TIMEOUT),
   }).then(response => {
     if (response.status >= 400) {
       throw new Error(response.statusText)
