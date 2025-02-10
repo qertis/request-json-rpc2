@@ -1,9 +1,9 @@
 # REQUEST JSON RPC2
 > Simplified JSON-RPC 2.0 CJS and ESM client
 
-## Super simple to use
+## Examples
 
-Request JSON-RPC 2 is designed to be the simplest way possible to make JSON-RPC 2 calls.
+Super simple to use request JSON-RPC 2 is designed to be the simplest way possible to make JSON-RPC 2 calls.
 
 ```javascript
 import requestJsonRpc2 from 'request-json-rpc2';
@@ -17,7 +17,7 @@ const result = await requestJsonRpc2({
 });
 ```
 
-## Powerful sample
+Powerful sample
 
 ```javascript
 const result = await requestJsonRpc2({
@@ -45,7 +45,7 @@ const result = await requestJsonRpc2({
 });
 ```
 
-## HTTP Authentication
+### HTTP Authentication
 
 Includes basic or bearer.
 
@@ -64,7 +64,7 @@ const result = await requestJsonRpc2({
 });
 ```
 
-## JWT
+### JWT
 
 JSON Web Token example.
 
@@ -74,14 +74,14 @@ const result = await requestJsonRpc2({
   body: {
     method: 'YOUR_METHOD',
     params: ['JWT hello world'],
-  }, 
-  jwt: 'ewogICJhbGciOiAiSFMyNTYiLAogICJ0eXAiOiAiSldUIgp9.ewogICJuYW1lIjogIlJlcXVlc3QgSlNPTi1SUEMgMi4wIgp9',
+  },
+  headers: {
+    'Authorization': 'Bearer ewogICJhbGciOiAiSFMyNTYiLAogICJ0eXAiOiAiSldUIgp9.ewogICJuYW1lIjogIlJlcXVlc3QgSlNPTi1SUEMgMi4wIgp9',
+  },
 });
 ```
 
-## Signature
-
-> Ed25519Signature2018
+### Ed25519Signature2018
 
 ```javascript
 const result = await requestJsonRpc2({
@@ -102,4 +102,5 @@ const result = await requestJsonRpc2({
 ```
 
 ## Testing
+
 See [tests directory](https://github.com/qertis/request-json-rpc2/tree/master/tests).

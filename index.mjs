@@ -1,35 +1,45 @@
 /**
- * @constant
- * @type {string}
- */
-const VERSION = '2.0';
-/**
  * @param {object} obj - object
  * @param {string} obj.url - url
  * @param {object} obj.body - body
  * @param {object} [obj.headers] - headers
  * @param {object} [obj.auth] - basic auth
- * @param {object} [obj.jwt] - jwt
  * @param {object} [obj.signature] - verification Ed25519 signatures
+ * @param {string} [obj.credentials] - credentials
  * @param {boolean} [obj.dev] - development
  * @param {object} [app] - Express JS Application
  * @returns {Promise<object>}
  */
 export default async({
-               url,
-               body,
-               headers = {},
-               auth,
-               jwt,
-               signature,
-               dev = false,
-             }, app) => {
+  url,
+  body,
+  headers = {},
+  auth,
+  signature,
+  dev = false,
+  credentials = 'omit',
+}, app) => {
+  /**
+  * @constant
+  * @type {string}
+  */
+  const VERSION = '2.0';
+  /**
+   * @constant
+   * @type {number}
+   */
+  const INTERNAL_ERROR = -32603;
+  /**
+   * @constant
+   * @type {number}
+   */
+  const GENERAL_ERROR = -32099;
   if ('production' !== process.env.NODE_ENV) {
     if (dev) {
       if (!app) {
         return Promise.reject({
           jsonrpc: VERSION,
-          error: {code: -32603, message: '"app" not found in second argument'},
+          error: {code: INTERNAL_ERROR, message: '"app" not found in second argument'},
           id: null,
         });
       }
@@ -49,9 +59,6 @@ export default async({
       if (signature) {
         parameters.headers['Signature'] = JSON.stringify(signature);
       }
-      if (jwt) {
-        parameters.headers['Authorization'] = 'Bearer ' + jwt;
-      }
       if (auth) {
         parameters.auth = auth;
       }
@@ -67,7 +74,7 @@ export default async({
         .then(response => response.body)
         .catch(e => ({
           jsonrpc: VERSION,
-          error: {code: -32603, message: e.message},
+          error: {code: INTERNAL_ERROR, message: e.message},
           id: null,
         }))
     }
@@ -85,9 +92,6 @@ export default async({
   }
   if (signature) {
     fheaders.append('Signature', JSON.stringify(signature));
-  }
-  if (jwt) {
-    fheaders.append('Authorization', 'Bearer ' + jwt);
   }
   if (auth && auth.user && auth.pass) {
     const basicAuth = 'Basic ' +
@@ -115,6 +119,7 @@ export default async({
     body: JSON.stringify(parameters),
     headers: fheaders,
     method: 'POST',
+    credentials,
     signal: AbortSignal.timeout(30000),
   }).then(response => {
     if (response.status >= 400) {
@@ -135,16 +140,16 @@ export default async({
       case 'Not Found': {
         return {
           jsonrpc: VERSION,
-          error: { code: -32603, message: message },
+          error: { code: INTERNAL_ERROR, message: message },
           id: null,
-        }
+        };
       }
       default: {
         return {
           jsonrpc: VERSION,
-          error: { code: -32099, message: message },
+          error: { code: GENERAL_ERROR, message: message },
           id: null,
-        }
+        };
       }
     }
   });
