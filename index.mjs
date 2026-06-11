@@ -1,3 +1,5 @@
+const loadDevDependency = dependency => import(dependency);
+
 /**
  * @param {object} obj - object
  * @param {string} obj.url - url
@@ -67,7 +69,7 @@ export default async({
       if (auth) {
         parameters.auth = auth;
       }
-      const request = await import('supertest');
+      const request = await loadDevDependency('supertest');
       const {post} = request.default(app);
       return post(url)
         .send({

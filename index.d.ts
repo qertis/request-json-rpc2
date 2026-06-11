@@ -53,7 +53,3 @@ export interface JSONRPCRequest {
 declare const _default: (request: JSONRPCRequest) => Promise<JSONRPCResponse>;
 
 export default _default;
-
-declare module 'request-json-rpc2' {
-  export = _default;
-}
